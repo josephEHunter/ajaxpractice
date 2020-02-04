@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Ajax</title>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- <script src="app.js"></script> -->
+
+  </head>
+
+    <body>
+      <style media="screen">
+        body{
+          background-image: url(https://images.fineartamerica.com/images/artworkimages/mediumlarge/1/pokeball-denny-ary-lesmana.jpg)
+        }
+        h1{
+          color:blue;
+          text-align:center;
+        }
+
+        dl dt{
+          font-size:30px;
+          text-align:center;
+        }
+
+        dl dd{
+            font-size:30px;
+            text-align:center;
+        }
+
+        #title{
+          text-align:center;
+          font-family:sans;
+          padding-right:10px;
+        }
+
+        form{
+          text-align:center
+        }
+
+        #inputArea{
+          height:40px;
+          width:180px;
+          font-size:30px;
+        }
+
+        #pokeball{
+          border-radius:1800px;
+          height:55px;
+          background-color:red;
+        }
+
+
+      </style>
+      <h1>Pokemon info</h1>
+      <form>
+        <input id="inputArea" type="text" placeholder="Pokemon">
+        <input id="pokeball" type="submit" value="Search">
+      </form>
+      <dl>
+        <dt><h3>Name:</h3></dt>
+        <br>
+        <dd id="name"><h4></h4></dd>
+            <br>
+
+        <dt><h3>Weight:</h3></dt>
+        <br>
+        <dd id="type"><h4></h4></dd>
+            <br>
+
+        <dt><h3>Height:</h3></dt>
+        <br>
+        <dd id="stat"><h4></h4></dd>
+              <br>
+
+        <dt><h2>Order Number:</h2></dt>
+        <br>
+        <dd id="num"><h2></h2></dd>
+              <br>
+
+        <dt><h2>Image:</h2></dt>
+        <br>
+        <dd><img id="sprite"></dd>
+        <dd><img id="shiny"></dd>
+
+
+      </dl>
+
+
+
+      <script>
+
+
+          $(()=>{
+            $('form').on("submit", (event)=>{
+
+                event.preventDefault();
+
+                const userInput = $('input[type="text"]').val();
+
+
+            $.ajax({
+              url:'https://pokeapi.co/api/v2/pokemon/' + userInput
+            }).then(
+               (data)=>{
+                $('#name').html(data.name);
+                $('#type').html(data.weight);
+                $('#num').html(data.order);
+                $('#stat').html(data.height);
+                $('#sprite').html(data.sprites.front_default);
+                document.getElementById("sprite").src = data.sprites.front_default;
+                document.getElementById("shiny").src = data.sprites.front_shiny;
+              },
+               ()=>{
+                console.log('bad request');
+              }
+            );
+          })
+        })
+
+      </script>
+
+    </body>
+
+</html>
